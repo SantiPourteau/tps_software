@@ -3,7 +3,6 @@ module Stack ( Stack, newS, freeCellsS, stackS, netS, holdsS, popS )
 
 import Palet
 import Route
-import qualified Control.Applicative as stack
 
 data Stack = Sta [ Palet ] Int deriving (Eq, Show)
 -- Capacidad lo tomamos como la cantidad de palets que puede tener la pila, no la cantidad disponibles restantes. Por lo tanto es un numero fijo una vez creado el stack.
