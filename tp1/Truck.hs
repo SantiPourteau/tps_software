@@ -8,7 +8,11 @@ import Route
 data Truck = Tru [ Stack ] Route deriving (Eq, Show)
 
 newT :: Int -> Int -> Route -> Truck  -- construye un camion según una cantidad de bahias, la altura de las mismas y una ruta
-newT bahias altura ruta = Tru (replicate bahias (newS altura)) ruta
+newT bahias altura ruta
+  | bahias <= 0 = error "La cantidad de bahías debe ser mayor a 0"
+  -- | altura <= 0 = error "La altura de las bahías debe ser mayor a 0"
+  -- ya se controla en newS
+  | otherwise = Tru (replicate bahias (newS altura)) ruta
 
 freeCellsT :: Truck -> Int            -- responde la celdas disponibles en el camion
 freeCellsT (Tru stacks _) = sum [freeCellsS stack | stack <- stacks]

@@ -24,13 +24,27 @@ netS :: Stack -> Int                      -- responde el peso neto de los palete
 netS (Sta palets _) = sum [netP p | p <- palets]
 
 holdsS :: Stack -> Palet -> Route -> Bool -- indica si la pila puede aceptar el palet considerando las ciudades en la ruta
-holdsS (Sta (p:ps) _) nuevoPalet (Rou ciudades)
-  | destinationP nuevoPalet `notElem` ciudades = False
-  | otherwise = inOrderR (Rou ciudades) (destinationP nuevoPalet) (destinationP p)
-
+holdsS stack nuevoPalet (Rou ciudades)
+  | freeCellsS stack <= 0 = False
+  | otherwise = case stack of
+      -- Si la pila esta vacia, el palet puede ser apilado si su destino esta en la lista de ciudades
+      Sta [] _ -> destinationP nuevoPalet `elem` ciudades
+      -- Si la pila no esta vacia, el palet puede ser apilado si su destino esta en la lista de ciudades y todos los palets ya apilados estan en orden respecto al nuevo palet
+      Sta palets _ -> destinationP nuevoPalet `elem` ciudades &&
+                     all (\p -> inOrderR (Rou ciudades) (destinationP p) (destinationP nuevoPalet)) palets
 
 popS :: Stack -> String -> Stack          -- quita del tope los paletes con destino en la ciudad indicada
+
+-- Caso base: si la pila esta vacia, no se puede quitar ningun palet
 popS (Sta [] capacidad) _ = Sta [] capacidad
+-- Caso recursivo: si el palet en el tope de la pila tiene el destino indicado, se quita y se continua con el resto de la pila
 popS (Sta (p:ps) capacidad) ciudad
     | destinationP p == ciudad = popS (Sta ps capacidad) ciudad
     | otherwise = Sta (p:ps) capacidad
+
+-- Aclaracion: si el palet superior no tiene el destino indicado, se devuelve la pila sin cambios.
+
+
+
+
+
