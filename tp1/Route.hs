@@ -3,14 +3,20 @@ module Route ( Route, newR, inOrderR )
 
 data Route = Rou [ String ] deriving (Eq, Show)
 
-newR :: [ String ] -> Route                    -- construye una ruta segun una lista de ciudades
+-- Construye una ruta a partir de una lista de ciudades.
+newR :: [ String ] -> Route
+newR [] = error "La lista de ciudades no puede estar vacía al crear la ruta"
 newR ciudades = Rou ciudades
 
-inOrderR :: Route -> String -> String -> Bool  -- indica si la primer ciudad consultada esta antes que la segunda ciudad en la ruta
-inOrderR (Rou ciudades) ciudad1 ciudad2 = checkOrder ciudades ciudad1 ciudad2
+-- Indica si la primer ciudad (city1) aparece antes que la segunda (city2) en la ruta.
+inOrderR :: Route -> String -> String -> Bool
+inOrderR (Rou []) _ _ = error "La ruta no puede estar vacía"
+inOrderR (Rou ciudades) city1 city2
+  | not (city1 `elem` ciudades) = error ("La ciudad " ++ city1 ++ " no se encuentra en la ruta")
+  | not (city2 `elem` ciudades) = error ("La ciudad " ++ city2 ++ " no se encuentra en la ruta")
+  | otherwise = checkOrder ciudades
   where
-    checkOrder [] _ _ = False
-    checkOrder (x:xs) c1 c2
-      | x == c1 = True
-      | x == c2 = False
-      | otherwise = checkOrder xs c1 c2
+    checkOrder (x:xs)
+      | x == city1 = True
+      | x == city2 = False
+      | otherwise  = checkOrder xs
