@@ -1,4 +1,4 @@
-module Truck ( Truck, newT, freeCellsT, loadT, unloadT, netT )
+module Truck ( Truck, newT, freeCellsT, loadT, unloadT, netT)
   where
 
 import Palet
@@ -28,13 +28,9 @@ loadT (Tru stacks ruta) palet =
                       Just rest -> Just (s : rest)
                       Nothing -> Nothing
 
--- unloadT (Tru stacks (Rou ciudades)) ciudad =
---     Tru [popS stack ciudad | stack <- stacks] (Rou (filter (/= ciudad) ciudades))
-
 unloadT (Tru stacks ruta) ciudad = Tru [popS stack ciudad | stack <- stacks] ruta
 
 -- Una vez descargado los paletes de la ciudad, que se elimine la ciudad de la ruta
 
 netT :: Truck -> Int                  -- responde el peso neto en toneladas de los paletes en el camion
 netT (Tru stacks _) = sum [netS stack | stack <- stacks]
-
