@@ -22,15 +22,20 @@ stackS (Sta palets capacidad) palet = Sta (palet:palets) capacidad
 netS :: Stack -> Int                      -- responde el peso neto de los paletes en la pila
 netS (Sta palets _) = sum [netP p | p <- palets]
 
-holdsS :: Stack -> Palet -> Route -> Bool -- indica si la pila puede aceptar el palet considerando las ciudades en la ruta
+holdsS :: Stack -> Palet -> Route -> Bool
 holdsS stack nuevoPalet route
   | freeCellsS stack <= 0 = False
+  | not (inRouteR route (destinationP nuevoPalet)) = False
   | otherwise = case stack of
-      -- Si la pila esta vacia, el palet puede ser apilado si su destino está en la ruta
-      Sta [] _ -> inRouteR route (destinationP nuevoPalet)
-      -- Si la pila no está vacia, el palet puede ser apilado si su destino está en la ruta y todos los palets ya apilados están en orden respecto al nuevo palet
-      Sta palets _ -> inRouteR route (destinationP nuevoPalet) &&
-                     all (\p -> inOrderR route (destinationP p) (destinationP nuevoPalet)) palets
+      -- Si la pila está vacía, basta con que el destino esté en la ruta
+      Sta [] _ -> True
+
+      -- Si la pila no está vacía, el destino del nuevo palet (cityN)
+      -- debe visitarse *antes* que el del palet de arriba (cityTop),
+      -- para que sea el primero en desapilarse.
+      Sta (p:_) _ ->
+          inOrderR route (destinationP nuevoPalet) (destinationP p)
+
 
 popS :: Stack -> String -> Stack          -- quita del tope los paletes con destino en la ciudad indicada
 
