@@ -3,14 +3,12 @@ package anillo;
 import java.util.NoSuchElementException;
 
 public class Ring {
-    private Object cargo;
     private Ring next;
-    private boolean empty;
+    private Object cargo;
 
     // Constructor: crea un anillo vacío.
     public Ring() {
-        empty = true;
-        next = this;
+       EmptyRing newEmptyRing = new EmptyRing();
     }
 
     // Devuelve el cargo del nodo actual o lanza una excepción si el anillo está vacío.
@@ -67,6 +65,4 @@ public class Ring {
             return this;
         }
     } // Devuelve el nodo que era el siguiente cuando quise remover.
-
-
 }
