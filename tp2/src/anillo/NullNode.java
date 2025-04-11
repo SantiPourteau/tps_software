@@ -1,6 +1,6 @@
 package anillo;
 
-public class NullNode implements AbstractNode {
+public class NullNode extends AbstractNode {
 
     @Override
     public AbstractNode add(AbstractNode node, AbstractNode current) {

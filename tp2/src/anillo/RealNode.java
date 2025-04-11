@@ -1,7 +1,7 @@
 package anillo;
 
 
-public class RealNode implements AbstractNode {
+public class RealNode extends AbstractNode {
 
     private Object cargo;
     private RealNode next;
