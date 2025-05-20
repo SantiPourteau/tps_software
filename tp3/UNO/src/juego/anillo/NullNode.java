@@ -1,4 +1,4 @@
-package anillo;
+package juego.anillo;
 
 public class NullNode extends AbstractNode {
 

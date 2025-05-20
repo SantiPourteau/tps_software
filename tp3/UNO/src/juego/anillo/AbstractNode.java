@@ -1,4 +1,4 @@
-package anillo;
+package juego.anillo;
 
 public abstract class AbstractNode {
     public abstract AbstractNode add(AbstractNode node, AbstractNode current);

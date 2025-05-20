@@ -1,4 +1,4 @@
-package anillo;
+package juego.anillo;
 
 import java.util.Stack;
 

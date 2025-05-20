@@ -1,0 +1,40 @@
+package juego.carta;
+
+import juego.controlador.Controlador;
+
+public abstract class Carta {
+    public String color;
+
+    protected abstract boolean esCompatible(Carta c);
+
+    public abstract Controlador actualizarControlador(Controlador c);
+
+    public int numLevantarCartas(){ // Por defecto levantas 0
+        return 0;
+    };
+
+    // Son los comportamientos mas comunes por defecto, se sobreescriben por clase solo las que son necesarias.
+    protected boolean esCompatibleColor(Carta c){
+        return this.color.equals(c.color);
+    }
+
+    protected boolean esCompatibleReverse(Carta C){
+        return false;
+    }
+
+    protected boolean esCompatibleNumero(Carta c){
+        return false;
+    }
+
+    protected boolean esCompatibleSkip(Carta c){
+        return false;
+    }
+
+    protected boolean esCompatibleDraw2(Carta c){
+        return false;
+    }
+
+    protected boolean esCompatibleWild(Carta c){
+        return true;
+    }
+}
