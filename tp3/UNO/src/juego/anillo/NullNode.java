@@ -26,5 +26,10 @@ public class NullNode extends AbstractNode {
         // Lanza excepción, ya que no existe un nodo actual en NullNode.
         throw new UnsupportedOperationException("No hay nodo actual en un NullNode.");
     }
+    @Override
+    public AbstractNode previous(AbstractNode node) {
+        // Lanza excepción, ya que no hay un "anterior" en NullNode.
+        throw new UnsupportedOperationException("No hay nodo anterior en un NullNode.");
+    }
 }
 

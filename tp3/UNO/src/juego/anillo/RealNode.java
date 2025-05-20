@@ -56,5 +56,11 @@ public class RealNode extends AbstractNode {
         RealNode currentNode = (RealNode) node;
         return currentNode.cargo;
     }
+    @Override
+    public AbstractNode previous(AbstractNode node) {
+        // Devuelve el anterior de 'node'
+        RealNode currentNode = (RealNode) node;
+        return currentNode.prev;
+    }
 
 }

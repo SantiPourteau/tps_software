@@ -5,6 +5,9 @@ import juego.controlador.Controlador;
 public class CartaWild extends Carta {
     public String color;
 
+    public CartaWild() {
+        this.color = "wild";
+    }
     public CartaWild(String color) {
         this.color = color;
     }

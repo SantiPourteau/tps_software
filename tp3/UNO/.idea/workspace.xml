@@ -4,31 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="27968acc-3a69-45b4-bd4e-7ea0ae0d5c24" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/juego/carta/Carta.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/juego/carta/CartaColoredWild.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/juego/carta/CartaReverse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/juego/carta/CartaSkip.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/juego/carta/CartaWild.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/juego/controlador/Controlador.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/juego/controlador/ControladorDerecha.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/juego/controlador/ControladorIzquierda.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/juego/jugador/Jugador.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/juego/tests/TestCarta.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/juego/tests/TestControlador.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/juego/tests/TestJuego.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/juego/tests/TestJugador.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/juego/tests/TestMazo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../tp2/src/anillo/AbstractNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/juego/anillo/AbstractNode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../tp2/src/anillo/Consigna.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/juego/anillo/Consigna.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../tp2/src/anillo/NullNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/juego/anillo/NullNode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../tp2/src/anillo/RealNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/juego/anillo/RealNode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../tp2/src/anillo/Ring.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/juego/anillo/Ring.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../tp2/src/anillo/RingTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/juego/anillo/RingTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/juego/Juego.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/juego/Juego.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/juego/TestJuego.java" beforeDir="false" />
-    </list>
+    <list default="true" id="27968acc-3a69-45b4-bd4e-7ea0ae0d5c24" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -78,19 +54,6 @@
       <recent name="juego" />
     </key>
   </component>
-  <component name="RunManager">
-    <configuration default="true" type="JetRunConfigurationType">
-      <module name="UNO" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <module name="UNO" />
-      <option name="filePath" />
-      <method v="2" />
-    </configuration>
-  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -110,6 +73,7 @@
       <workItem from="1747674852745" duration="7979000" />
       <workItem from="1747766492848" duration="66000" />
       <workItem from="1747766566466" duration="15000" />
+      <workItem from="1747771848824" duration="60000" />
     </task>
     <servers />
   </component>

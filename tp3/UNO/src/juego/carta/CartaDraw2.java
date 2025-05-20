@@ -1,6 +1,7 @@
 package juego.carta;
 
 import juego.controlador.Controlador;
+import juego.jugador.Jugador;
 
 public class CartaDraw2 extends Carta {
     public String color;
@@ -20,4 +21,8 @@ public class CartaDraw2 extends Carta {
     public Controlador actualizarControlador(Controlador c){
         return c.avanzar();
     }
+
+    public Jugador
+
+
 }

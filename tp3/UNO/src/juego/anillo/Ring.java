@@ -18,6 +18,10 @@ public class Ring {
         this.current = this.stack.lastElement().next(this.current);
         return this;
     }
+    public Ring previous() {
+        this.current = this.stack.lastElement().previous(this.current);
+        return this;
+    }
 
     public Object current() {
         return this.stack.lastElement().current(this.current);

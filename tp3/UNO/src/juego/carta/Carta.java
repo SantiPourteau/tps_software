@@ -1,6 +1,7 @@
 package juego.carta;
 
 import juego.controlador.Controlador;
+import juego.jugador.Jugador;
 
 public abstract class Carta {
     public String color;
@@ -36,5 +37,10 @@ public abstract class Carta {
 
     protected boolean esCompatibleWild(Carta c){
         return true;
+    }
+
+    protected Jugador LevantarCartas(Jugador j){
+        //por defecto levantas 0 cartas
+        return j;
     }
 }
