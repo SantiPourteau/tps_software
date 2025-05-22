@@ -22,7 +22,7 @@ public class CartaDraw2 extends Carta {
         return c.avanzar();
     }
 
-    public Jugador
-
-
+    public int penalizar() {
+        return 2;
+    }
 }

@@ -3,6 +3,9 @@ package juego.carta;
 import juego.controlador.Controlador;
 import juego.jugador.Jugador;
 
+import java.util.Deque;
+import java.util.Map;
+
 public abstract class Carta {
     public String color;
 
@@ -43,4 +46,10 @@ public abstract class Carta {
         //por defecto levantas 0 cartas
         return j;
     }
+
+    public int penalizar() {
+        return 0;
+    }
+
+
 }

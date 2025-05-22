@@ -18,4 +18,14 @@ public class Jugador {
         }
         return this;
     }
+
+    public void recibirCarta(Carta carta) {
+        
+    }
+
+    public int getManoSize() {
+    }
+
+    public boolean manoVacia() {
+    }
 }
