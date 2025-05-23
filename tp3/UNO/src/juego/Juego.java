@@ -45,12 +45,11 @@ public class Juego {
     public Juego jugarCarta(Carta carta) {
         Jugador actual = controlador.getJugadorActual();
         int manoAntes = actual.getManoSize();
-        if (actual.jugarCarta(carta)){
+        if (actual.jugarCarta(carta, getCartaPozo())){
             pozo = carta;
             carta.actualizarControlador(controlador);
         }
-        if (actual.getManoSize() == 1){// Penalizar (esto se deberia delegar a Carta)
-             }
+        // Va aca un if getManoSize == 1 -> Robar carta?
         if (actual.manoVacia()) {
             estado = "finalizada";
         }
@@ -61,7 +60,7 @@ public class Juego {
     public Juego jugarCartaCantandoUno(Carta carta) {
         Jugador actual = controlador.getJugadorActual();
         int manoAntes = actual.getManoSize();
-        if(actual.jugarCarta(carta)){
+        if(actual.jugarCarta(carta, getCartaPozo())){
             pozo = carta;
             carta.actualizarControlador(controlador);
         }
@@ -72,7 +71,7 @@ public class Juego {
         Jugador actual = controlador.getJugadorActual();
         int manoAntes = actual.getManoSize();
         CartaWild carta = new CartaWild(color);
-        if(actual.jugarCarta(carta)){
+        if(actual.jugarCarta(carta, getCartaPozo())){
             pozo = carta;
             carta.actualizarControlador(controlador);
         }

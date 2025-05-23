@@ -9,7 +9,7 @@ import java.util.Map;
 public abstract class Carta {
     public String color;
 
-    protected abstract boolean esCompatible(Carta c);
+    public abstract boolean esCompatible(Carta c);
 
     public abstract Controlador actualizarControlador(Controlador c);
 
