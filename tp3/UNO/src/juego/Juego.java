@@ -49,6 +49,9 @@ public class Juego {
             carta.actualizarControlador(this, controlador);
         }
         // Va aca un if getManoSize == 1 -> Robar carta?
+        if (actual.getManoSize() == 1){
+            controlador.penalizarJugador(this, 2);
+        }
         if (actual.manoVacia()) {
             estado = "finalizada";
         }
@@ -59,6 +62,10 @@ public class Juego {
     public Juego jugarCartaCantandoUno(Carta carta) {
         Jugador actual = controlador.getJugadorActual();
         int manoAntes = actual.getManoSize();
+        if (actual.getManoSize() != 2){
+            controlador.penalizarJugador(this, 2);
+            return this;
+        }
         if(actual.jugarCarta(carta, getCartaPozo())){
             pozo = carta;
             carta.actualizarControlador(this, controlador);
@@ -79,9 +86,9 @@ public class Juego {
 
     public Juego levantarCartaMazo(){
         // La funcion que se llama cuando un jugador no puede tirar ninguna carta y tiene que levantar del mazo
+        // El jugador puede decidir levantar una carta aunque pueda tirar.
         Jugador actual = controlador.getJugadorActual();
         controlador.penalizarJugador(this,1);
-        controlador.avanzar();
         return this;
     }
 
