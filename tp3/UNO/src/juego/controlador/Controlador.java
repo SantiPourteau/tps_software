@@ -3,6 +3,7 @@ package juego.controlador;
 import java.util.List;
 
 import juego.anillo.Ring;
+import juego.jugador.Jugador;
 
 /**
  * Controlador abstracto que recorre un anillo de jugadores.
@@ -13,10 +14,10 @@ public abstract class Controlador {
     /**
      * Constructor inicial: crea e inicializa el anillo con los jugadores.
      */
-    public Controlador(List<String> jugadores) {
+    public Controlador(List<Jugador> jugadores) {
         anillo = new Ring();
-        for (String jugador : jugadores) {
-            anillo.add(jugador);
+        for (Jugador persona : jugadores) {
+            anillo.add(persona);
         }
     }
 
@@ -43,7 +44,7 @@ public abstract class Controlador {
     /**
      * Obtiene el jugador actual del anillo.
      */
-    public String getJugadorActual() {
+    public Jugador getJugadorActual() {
         return anillo.current();
     }
 }

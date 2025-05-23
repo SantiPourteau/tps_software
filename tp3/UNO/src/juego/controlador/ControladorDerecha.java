@@ -2,12 +2,12 @@ package juego.controlador;
 
 import java.util.List;
 import juego.anillo.Ring;
-
+import juego.jugador.Jugador;
 /**
  * Controlador que avanza en sentido horario (derecha).
  */
 public class ControladorDerecha extends Controlador {
-    public ControladorDerecha(List<String> jugadores) {
+    public ControladorDerecha(List<Jugador> jugadores) {
         super(jugadores);
     }
     protected ControladorDerecha(Ring anillo) {

@@ -6,9 +6,11 @@ import java.util.List;
 public class Jugador {
 
     private List<Carta> mano;
+    public String nombre;
 
-    public Jugador(List<Carta> cartas) {
+    public Jugador(String nombre, List<Carta> cartas) {
         this.mano = cartas;
+        this.nombre = nombre;
     }
 
     public Jugador jugarCarta(Carta carta) {
@@ -19,11 +21,13 @@ public class Jugador {
         return this;
     }
 
-    public void recibirCarta(Carta carta) {
-        
+    public Jugador recibirCarta(Carta carta) {
+        mano.add(carta);
+        return this;
     }
 
     public int getManoSize() {
+        return mano.size();
     }
 
     public boolean manoVacia() {

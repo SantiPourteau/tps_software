@@ -1,13 +1,14 @@
 package juego.anillo;
 
+import juego.jugador.Jugador;
 
 public class RealNode extends AbstractNode {
 
-    private Object cargo;
+    private Jugador cargo;
     private RealNode next;
     private RealNode prev;
 
-    public RealNode(Object cargo) {
+    public RealNode(Jugador cargo) {
         this.cargo = cargo;
         // Inicialmente, el nodo se apunta a sí mismo
         this.next = this;
@@ -51,7 +52,7 @@ public class RealNode extends AbstractNode {
     }
 
     @Override
-    public Object current(AbstractNode node) {
+    public Jugador current(AbstractNode node) {
         // Retorna el propio 'node' como "nodo actual"
         RealNode currentNode = (RealNode) node;
         return currentNode.cargo;

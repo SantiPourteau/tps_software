@@ -13,14 +13,11 @@ import java.util.*;
  * Las cartas se reparten de forma consecutiva sin mezclar.
  */
 public class Juego {
-    private Controlador controlador;
-    private Map<String, Jugador> jugadores;
-    private Deque<Carta> mazo;
-    private Deque<Carta> pilaDescarte;
+    private List<Carta> mazo;
     private Carta pozo;
-    private int penalizacionCartas = 0;  // cartas a levantar por penalización
+    private Controlador controlador;
+    private List<Jugador> jugadores = new ArrayList<Jugador>();
     private String estado = "enCurso";
-
     /**
      * Inicializa el juego:
      * @param cartas     lista inicial del mazo (orden predefinido)
@@ -28,28 +25,21 @@ public class Juego {
      * @param nombres    nombres de los jugadores en orden de juego
      */
     public Juego(List<Carta> cartas, int numCartas, List<String> nombres) {
-        this.controlador = new ControladorDerecha(nombres);
-        this.jugadores = new LinkedHashMap<>();
         for (String nombre : nombres) {
-            this.jugadores.put(nombre, new Jugador(new ArrayList<>()));
+            this.jugadores.add(new Jugador(nombre, new ArrayList<Carta>()));
         }
+        this.controlador = new ControladorDerecha(this.jugadores);
         int idx = 0;
         // Reparto consecutivo
-        for (String nombre : nombres) {
-            Jugador j = jugadores.get(nombre);
+        for (Jugador j : jugadores) {
             for (int i = 0; i < numCartas; i++) {
-                j.recibirCarta(cartas.get(idx));
-                idx++;
+                j.recibirCarta(mazo.robarCarta());
             }
         }
         // Carta inicial del pozo
-        this.pozo = cartas.get(idx);
+        this.pozo = cartas.remove(idx);
         idx++;
-        this.pilaDescarte = new ArrayDeque<>();
-        pilaDescarte.push(pozo);
-        // Resto al mazo
-        List<Carta> resto = cartas.subList(idx, cartas.size());
-        this.mazo = new ArrayDeque<>(resto);
+        this.mazo = cartas;
     }
 
     /**
@@ -58,24 +48,13 @@ public class Juego {
      * Si se queda sin cartas, termina el juego.
      */
     public Juego jugarCarta(Carta carta) {
-        String actual = controlador.getJugadorActual();
-        Jugador j = jugadores.get(actual);
-        int manoAntes = j.getManoSize();
-        j.jugarCarta(carta);
-        pilaDescarte.push(carta);
+        Jugador actual = controlador.getJugadorActual();
+        int manoAntes = actual.getManoSize();
+        actual.jugarCarta(carta);
         pozo = carta;
-        // Acumula penalización según tipo de carta
-        penalizacionCartas += carta.penalizar();
-        // Si no cantó Uno (tenía 2 cartas), se penaliza
-        if (manoAntes == 2) {
-            robarCartas(penalizacionCartas);
-            penalizacionCartas = 0;
-        }
-        // Verifica victoria
-        if (j.manoVacia()) {
+        if (actual.manoVacia()) {
             estado = "finalizada";
         }
-        carta.applyEffect(controlador, mazo, jugadores);
         return this;
     }
 

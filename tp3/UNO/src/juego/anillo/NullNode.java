@@ -1,5 +1,7 @@
 package juego.anillo;
 
+import juego.jugador.Jugador;
+
 public class NullNode extends AbstractNode {
 
     @Override
@@ -22,7 +24,7 @@ public class NullNode extends AbstractNode {
     }
 
     @Override
-    public Object current(AbstractNode node) {
+    public Jugador current(AbstractNode node) {
         // Lanza excepción, ya que no existe un nodo actual en NullNode.
         throw new UnsupportedOperationException("No hay nodo actual en un NullNode.");
     }

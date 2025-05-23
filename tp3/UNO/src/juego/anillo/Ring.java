@@ -1,5 +1,7 @@
 package juego.anillo;
 
+import juego.jugador.Jugador;
+
 import java.util.Stack;
 
 public class Ring {
@@ -23,11 +25,11 @@ public class Ring {
         return this;
     }
 
-    public Object current() {
+    public Jugador current() {
         return this.stack.lastElement().current(this.current);
     }
 
-    public Ring add(Object cargo) {
+    public Ring add(Jugador cargo) {
         RealNode node = new RealNode(cargo);
         //Llamar al metodo del ultimo del stack
         this.stack.lastElement().add(node,this.current);
