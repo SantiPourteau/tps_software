@@ -42,16 +42,27 @@ public class Juego {
     }
 
     public Juego jugarCarta(Carta carta) {
+        if (estado.equals("finalizada")) {
+            throw new IllegalStateException("El juego ya ha finalizado.");
+        }
         Jugador actual = controlador.getJugadorActual();
-        int manoAntes = actual.getManoSize();
-        if (actual.jugarCarta(carta, getCartaPozo())){
-            pozo = carta;
-            carta.actualizarControlador(this, controlador);
+
+
+
+        if (actual.jugarCarta(carta, this.pozo)){
+            this.pozo = carta;
+            if (actual.getManoSize() == 1){
+                controlador = controlador.penalizarJugador(this, 2);
+            }
+            controlador = carta.actualizarControlador(this, controlador);
         }
+        else {
+            // no se puede jugar la carta devuelve exepcion
+            controlador = controlador.penalizarJugador(this, 2).avanzar();
+        }
+
         // Va aca un if getManoSize == 1 -> Robar carta?
-        if (actual.getManoSize() == 1){
-            controlador.penalizarJugador(this, 2);
-        }
+
         if (actual.manoVacia()) {
             estado = "finalizada";
         }
@@ -60,26 +71,44 @@ public class Juego {
 
 
     public Juego jugarCartaCantandoUno(Carta carta) {
+        if (estado.equals("finalizada")) {
+            throw new IllegalStateException("El juego ya ha finalizado.");
+        }
         Jugador actual = controlador.getJugadorActual();
-        int manoAntes = actual.getManoSize();
         if (actual.getManoSize() != 2){
-            controlador.penalizarJugador(this, 2);
-            return this;
+            controlador = controlador.penalizarJugador(this, 2);
+
         }
         if(actual.jugarCarta(carta, getCartaPozo())){
             pozo = carta;
-            carta.actualizarControlador(this, controlador);
+            controlador = carta.actualizarControlador(this, controlador);
         }
+        else {
+            // levanta por jugar mal la carta
+            controlador = controlador.penalizarJugador(this, 2).avanzar();
+
+        }
+
+        if (actual.manoVacia()) {
+            estado = "finalizada";
+        }
+
         return this;
     }
 
     public Juego jugarCartaCambiandoColor(String color) {
+        if (estado.equals("finalizada")) {
+            throw new IllegalStateException("El juego ya ha finalizado.");
+        }
         Jugador actual = controlador.getJugadorActual();
-        int manoAntes = actual.getManoSize();
         CartaWild carta = new CartaWild(color);
         if(actual.jugarCarta(carta, getCartaPozo())){
             pozo = carta;
-            carta.actualizarControlador(this, controlador);
+            controlador = carta.actualizarControlador(this, controlador);
+        }
+        else {
+            // levanta por jugar mal la carta
+            controlador = controlador.penalizarJugador(this, 2);
         }
         return this;
     }
@@ -87,8 +116,7 @@ public class Juego {
     public Juego levantarCartaMazo(){
         // La funcion que se llama cuando un jugador no puede tirar ninguna carta y tiene que levantar del mazo
         // El jugador puede decidir levantar una carta aunque pueda tirar.
-        Jugador actual = controlador.getJugadorActual();
-        controlador.penalizarJugador(this,1);
+        controlador = controlador.penalizarJugador(this,1);
         return this;
     }
 
@@ -106,5 +134,8 @@ public class Juego {
 
     public String getEstado() {
         return estado;
+    }
+    public Jugador getJugadorActual() {
+        return controlador.getJugadorActual();
     }
 }

@@ -14,6 +14,10 @@ public class Jugador {
     }
 
     public boolean jugarCarta(Carta cartaJugador, Carta cartaPozo) {
+        //ver que el jugador tenga la carta
+        if (!mano.contains(cartaJugador)) {
+            throw new IllegalArgumentException("El jugador no tiene la carta.");
+        }
         if (cartaJugador.esCompatible(cartaPozo)){
             mano.remove(cartaJugador);
             return true;
