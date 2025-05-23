@@ -1,6 +1,8 @@
 package juego.tests;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,50 +17,100 @@ public class TestJuego {
     }
 
     @Test
-    public void testDraw2Roba2(){}
+    public void testRobarCartasIniciales() {
+    }
 
     @Test
-    public void testSkipSalteaJugador(){}
+    public void testInvertirOrden() {
+    }
 
     @Test
-    public void testReverseInvierteOrden(){}
+    public void testGanarJuego() {
+    }
 
     @Test
-    public void testWildCambiaColor(){}
+    public void testPenalizacionPorNoCantarUno() {
+    }
 
     @Test
-    public void testAceptaColorCorrecto(){}
+    public void testNoSePuedeJugarDespuesDeFinalizar() {
+    }
 
     @Test
-    public void testAceptaNumeroCorrectoColorDistinto(){}
+    public void testRobarCartasDespuesDeFinalizar() {
+    }
 
     @Test
-    public void testAceptaTipoCorrectoColorDistinto(){}
+    public void testJugarCartaQueNoTienes() {
+    }
+
+    // Tests de validez de jugadas combinando tipos de carta
 
     @Test
-    public void testFallaColorYTipoIncorrecto(){}
+    public void testValidNumberWithNumberDifferentColour() {
+    }
 
     @Test
-    public void testCantarUnoCorrectamente(){}
+    public void testValidNumberWithNumberSameColourDifferentNumber() {
+    }
 
     @Test
-    public void testNoCantarUnoRoba2(){}
+    public void testInvalidNumberWithNumberDifferentColourAndDifferentNumber() {
+    }
 
     @Test
-    public void testCantarUnoIncorrectamente(){}
+    public void testValidDrawTwoWithDrawTwoDifferentColour() {
+    }
 
     @Test
-    public void testGanarJuego(){}
+    public void testValidDrawTwoWithNumberSameColour() {
+    }
 
     @Test
-    public void testPenalizacionPorNoCantarUno(){}
+    public void testInvalidDrawTwoWithNumberDifferentColour() {
+    }
 
     @Test
-    public void testNoSePuedeJugarDespuesDeFinalizar() {}
+    public void testValidReverseWithReverseDifferentColour() {
+    }
 
     @Test
-    public void testRobarCartasDespuesDeFinalizar() {}
+    public void testValidReverseWithNumberSameColour() {
+    }
 
     @Test
-    public void testJugarCartaQueNoTienes() {}
+    public void testInvalidReverseWithNumberDifferentColour() {
+    }
+
+    @Test
+    public void testValidSkipWithSkipDifferentColour() {
+    }
+
+    @Test
+    public void testValidSkipWithNumberSameColour() {
+    }
+
+    @Test
+    public void testInvalidSkipWithNumberDifferentColour() {
+    }
+
+    @Test
+    public void testValidWildWithNumber() {
+    }
+
+    @Test
+    public void testValidWildWithDrawTwo() {
+    }
+
+    @Test
+    public void testValidWildWithReverse() {
+    }
+
+    @Test
+    public void testValidWildWithSkip() {
+    }
+
+    @Test
+    public void testValidWildWithWild() {
+    }
 }
