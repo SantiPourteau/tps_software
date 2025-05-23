@@ -18,7 +18,7 @@ public class ControladorIzquierda extends Controlador {
     }
 
     public Controlador avanzar() {
-        anillo.previous();
+        anillo.next();
         return this;
     }
 
@@ -27,8 +27,8 @@ public class ControladorIzquierda extends Controlador {
     }
 
     public Controlador saltear() {
-        anillo.previous();
-        anillo.previous();
+        anillo.next();
+        anillo.next();
         return this;
     }
 

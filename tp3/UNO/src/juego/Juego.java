@@ -18,7 +18,7 @@ import java.util.*;
 public class Juego {
     public Deque<Carta> mazo;
     private Carta pozo;
-    private Controlador controlador;
+    public Controlador controlador;
     private List<Jugador> jugadores = new ArrayList<Jugador>();
     private String estado = "enCurso";
 
@@ -27,11 +27,11 @@ public class Juego {
         //Inicializar mazo
         this.mazo = new LinkedList<>(cartas);
         // Carta inicial del pozo
-        this.pozo = cartas.removeFirst();
+        this.pozo = mazo.removeFirst();
         for (String nombre : nombres) {
-            this.jugadores.add(new Jugador(nombre, new ArrayList<Carta>()));
+            this.jugadores.addLast(new Jugador(nombre, new ArrayList<Carta>()));
         }
-        this.controlador = new ControladorDerecha(this.jugadores);
+        this.controlador = new ControladorDerecha(this.jugadores).avanzar();
         // Reparto consecutivo
         for (Jugador j : jugadores) {
             for (int i = 0; i < numCartas; i++) {
@@ -116,6 +116,9 @@ public class Juego {
     public Juego levantarCartaMazo(){
         // La funcion que se llama cuando un jugador no puede tirar ninguna carta y tiene que levantar del mazo
         // El jugador puede decidir levantar una carta aunque pueda tirar.
+        if (estado.equals("finalizada")) {
+            throw new IllegalStateException("El juego ya ha finalizado.");
+        }
         controlador = controlador.penalizarJugador(this,1);
         return this;
     }
@@ -137,5 +140,17 @@ public class Juego {
     }
     public Jugador getJugadorActual() {
         return controlador.getJugadorActual();
+    }
+
+
+    public List<Carta> getCartasJugador(String nombreJug) {
+        for (Jugador j : jugadores) {
+            if (j.nombre.equals(nombreJug)) {
+                // Devolvemos una copia defensiva de la mano
+                return new ArrayList<>(j.getMano());
+            }
+        }
+        // Si no encontramos al jugador, devolvemos lista vacía
+        return Collections.emptyList();
     }
 }

@@ -13,12 +13,10 @@ public class ControladorDerecha extends Controlador {
     public ControladorDerecha(List<Jugador> jugadores) {
         super(jugadores);
     }
-    protected ControladorDerecha(Ring anillo) {
-        super(anillo);
-    }
+    protected ControladorDerecha(Ring anillo) {super(anillo);}
 
     public Controlador avanzar() {
-        anillo.next();
+        anillo.previous();
         return this;
     }
 
@@ -27,8 +25,8 @@ public class ControladorDerecha extends Controlador {
     }
 
     public Controlador saltear() {
-        anillo.next();
-        anillo.next();
+        anillo.previous();
+        anillo.previous();
         return this;
     }
 
