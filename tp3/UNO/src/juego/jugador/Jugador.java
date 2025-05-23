@@ -13,12 +13,12 @@ public class Jugador {
         this.nombre = nombre;
     }
 
-    public Jugador jugarCarta(Carta carta) {
+    public boolean jugarCarta(Carta carta) {
         boolean removed = mano.remove(carta);
         if (!removed) {
             throw new IllegalArgumentException("La carta no está en la mano");
         }
-        return this;
+        return true;
     }
 
     public Jugador recibirCarta(Carta carta) {
@@ -31,5 +31,6 @@ public class Jugador {
     }
 
     public boolean manoVacia() {
+        return mano.isEmpty();
     }
 }
