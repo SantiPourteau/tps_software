@@ -1,5 +1,6 @@
 package juego.carta;
 
+import juego.Juego;
 import juego.controlador.Controlador;
 
 public class CartaWild extends Carta {
@@ -16,7 +17,7 @@ public class CartaWild extends Carta {
         return true;
     }
 
-    public Controlador actualizarControlador(Controlador c){
+    public Controlador actualizarControlador(Juego juego, Controlador c){
         return c.avanzar();
     }
 }

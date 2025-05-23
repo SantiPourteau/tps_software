@@ -2,6 +2,7 @@ package juego.carta;
 
 import juego.controlador.Controlador;
 import juego.jugador.Jugador;
+import juego.Juego;
 
 public class CartaDraw2 extends Carta {
     public String color;
@@ -18,8 +19,8 @@ public class CartaDraw2 extends Carta {
         return (this.color.equals(c.color) || c.esCompatibleDraw2(this));
     }
 
-    public Controlador actualizarControlador(Controlador c){
-        return c.avanzar();
+    public Controlador actualizarControlador(Juego juego, Controlador c){
+        return c.avanzar().penalizarJugador(juego, 2).avanzar();
     }
 
     public int penalizar() {

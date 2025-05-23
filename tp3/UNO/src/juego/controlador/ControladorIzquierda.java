@@ -2,7 +2,9 @@ package juego.controlador;
 
 import java.util.List;
 import juego.anillo.Ring;
+import juego.carta.Carta;
 import juego.jugador.Jugador;
+import juego.Juego;
 
 /**
  * Controlador que avanza en sentido antihorario (izquierda).
@@ -15,21 +17,27 @@ public class ControladorIzquierda extends Controlador {
         super(anillo);
     }
 
-    @Override
     public Controlador avanzar() {
         anillo.previous();
         return this;
     }
 
-    @Override
     public Controlador invertir() {
         return new ControladorDerecha(anillo);
     }
 
-    @Override
     public Controlador saltear() {
         anillo.previous();
         anillo.previous();
+        return this;
+    }
+
+    public Controlador penalizarJugador(Juego juego, int numCartas) {
+        Jugador actual = anillo.current();
+        for (int i = 0; i < numCartas; i++) {
+            Carta carta = juego.mazo.removeFirst();
+            actual.recibirCarta(carta);
+        }
         return this;
     }
 }

@@ -2,6 +2,7 @@ package juego.controlador;
 
 import java.util.List;
 
+import juego.Juego;
 import juego.anillo.Ring;
 import juego.jugador.Jugador;
 
@@ -47,5 +48,7 @@ public abstract class Controlador {
     public Jugador getJugadorActual() {
         return anillo.current();
     }
+
+    public abstract Controlador penalizarJugador(Juego juego, int numCartas);
 }
 

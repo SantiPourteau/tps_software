@@ -1,5 +1,6 @@
 package juego.carta;
 
+import juego.Juego;
 import juego.controlador.Controlador;
 
 public class CartaSkip extends Carta {
@@ -17,7 +18,7 @@ public class CartaSkip extends Carta {
         return (this.color.equals(c.color) || c.esCompatibleSkip(this));
     }
 
-    public Controlador actualizarControlador(Controlador c){
+    public Controlador actualizarControlador(Juego juego, Controlador c){
         return c.saltear();
     }
 }

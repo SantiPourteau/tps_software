@@ -1,5 +1,6 @@
 package juego.carta;
 
+import juego.Juego;
 import juego.controlador.Controlador;
 
 public class CartaReverse extends Carta {
@@ -17,7 +18,7 @@ public class CartaReverse extends Carta {
         return this.color.equals(c.color) || c.esCompatibleReverse(this);
     }
 
-    public Controlador actualizarControlador(Controlador c){
+    public Controlador actualizarControlador(Juego juego, Controlador c){
         return c.invertir().avanzar();
     }
 }

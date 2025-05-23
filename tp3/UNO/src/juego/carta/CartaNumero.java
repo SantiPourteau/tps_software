@@ -1,5 +1,6 @@
 package juego.carta;
 
+import juego.Juego;
 import juego.controlador.Controlador;
 
 public class CartaNumero extends Carta {
@@ -19,7 +20,7 @@ public class CartaNumero extends Carta {
         return c.esCompatibleColor(this) || c.esCompatibleNumero(this);
     }
 
-    public Controlador actualizarControlador(Controlador c){
+    public Controlador actualizarControlador(Juego juego, Controlador c){
         return c.avanzar();
     }
 }

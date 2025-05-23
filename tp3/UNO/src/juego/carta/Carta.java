@@ -1,5 +1,6 @@
 package juego.carta;
 
+import juego.Juego;
 import juego.controlador.Controlador;
 import juego.jugador.Jugador;
 
@@ -11,7 +12,7 @@ public abstract class Carta {
 
     public abstract boolean esCompatible(Carta c);
 
-    public abstract Controlador actualizarControlador(Controlador c);
+    public abstract Controlador actualizarControlador(Juego juego, Controlador c);
 
     public int numLevantarCartas(){ // Por defecto levantas 0
         return 0;

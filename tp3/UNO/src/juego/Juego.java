@@ -9,7 +9,6 @@ import juego.carta.Carta;
 import java.util.*;
 
 // Hay que ver como delegar el cantar uno a Carta
-// Robar cartas se delega al controlador
 
 /**
  * Clase principal que gestiona el estado del juego sin bucle interno.
@@ -17,7 +16,7 @@ import java.util.*;
  * Las cartas se reparten de forma consecutiva sin mezclar.
  */
 public class Juego {
-    Deque<Carta> mazo;
+    public Deque<Carta> mazo;
     private Carta pozo;
     private Controlador controlador;
     private List<Jugador> jugadores = new ArrayList<Jugador>();
@@ -47,7 +46,7 @@ public class Juego {
         int manoAntes = actual.getManoSize();
         if (actual.jugarCarta(carta, getCartaPozo())){
             pozo = carta;
-            carta.actualizarControlador(controlador);
+            carta.actualizarControlador(this, controlador);
         }
         // Va aca un if getManoSize == 1 -> Robar carta?
         if (actual.manoVacia()) {
@@ -62,7 +61,7 @@ public class Juego {
         int manoAntes = actual.getManoSize();
         if(actual.jugarCarta(carta, getCartaPozo())){
             pozo = carta;
-            carta.actualizarControlador(controlador);
+            carta.actualizarControlador(this, controlador);
         }
         return this;
     }
@@ -73,12 +72,18 @@ public class Juego {
         CartaWild carta = new CartaWild(color);
         if(actual.jugarCarta(carta, getCartaPozo())){
             pozo = carta;
-            carta.actualizarControlador(controlador);
+            carta.actualizarControlador(this, controlador);
         }
         return this;
     }
 
-
+    public Juego levantarCartaMazo(){
+        // La funcion que se llama cuando un jugador no puede tirar ninguna carta y tiene que levantar del mazo
+        Jugador actual = controlador.getJugadorActual();
+        controlador.penalizarJugador(this,1);
+        controlador.avanzar();
+        return this;
+    }
 
     public int getCantidadCartas(String nombreJug) {
         return jugadores.stream()
