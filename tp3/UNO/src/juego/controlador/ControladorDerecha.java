@@ -30,13 +30,4 @@ public class ControladorDerecha extends Controlador {
         return this;
     }
 
-    public Controlador penalizarJugador(Juego juego, int numCartas) {
-        Jugador actual = anillo.current();
-        for (int i = 0; i < numCartas; i++) {
-            Carta carta = juego.mazo.removeFirst();
-            actual.recibirCarta(carta);
-        }
-        return this;
-    }
-
 }

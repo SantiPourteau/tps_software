@@ -7,6 +7,7 @@ import juego.jugador.Jugador;
 import juego.carta.Carta;
 
 import java.util.*;
+import java.util.stream.IntStream;
 
 // Hay que ver como delegar el cantar uno a Carta
 
@@ -24,30 +25,29 @@ public class Juego {
 
 
     public Juego(List<Carta> cartas, int numCartas, List<String> nombres) {
-        //Inicializar mazo
+        // Inicializar mazo y pozo
         this.mazo = new LinkedList<>(cartas);
-        // Carta inicial del pozo
         this.pozo = mazo.removeFirst();
-        for (String nombre : nombres) {
-            this.jugadores.addLast(new Jugador(nombre, new ArrayList<Carta>()));
-        }
-        this.controlador = new ControladorDerecha(this.jugadores).avanzar();
-        // Reparto consecutivo
-        for (Jugador j : jugadores) {
-            for (int i = 0; i < numCartas; i++) {
-                Carta carta = mazo.removeFirst();
-                j.recibirCarta(carta);
-            }
+        // Crear jugadores
+        nombres.forEach(nombre -> jugadores.add(new Jugador(nombre, new ArrayList<>())));
+        // Iniciar controlador y repartir cartas
+        this.controlador = new ControladorDerecha(jugadores).avanzar();
+        jugadores.forEach(j -> IntStream.range(0, numCartas)
+                .mapToObj(i -> mazo.removeFirst())
+                .forEach(j::recibirCarta)
+        );
+    }
+
+    // Validación de estado
+    private void asegurarNoFinalizado() {
+        if ("finalizada".equals(estado)) {
+            throw new IllegalStateException("El juego ya ha finalizado.");
         }
     }
 
     public Juego jugarCarta(Carta carta) {
-        if (estado.equals("finalizada")) {
-            throw new IllegalStateException("El juego ya ha finalizado.");
-        }
+        asegurarNoFinalizado();
         Jugador actual = controlador.getJugadorActual();
-
-
 
         if (actual.jugarCarta(carta, this.pozo)){
             this.pozo = carta;
@@ -60,9 +60,6 @@ public class Juego {
             // no se puede jugar la carta devuelve exepcion
             controlador = controlador.penalizarJugador(this, 2).avanzar();
         }
-
-        // Va aca un if getManoSize == 1 -> Robar carta?
-
         if (actual.manoVacia()) {
             estado = "finalizada";
         }
@@ -71,9 +68,7 @@ public class Juego {
 
 
     public Juego jugarCartaCantandoUno(Carta carta) {
-        if (estado.equals("finalizada")) {
-            throw new IllegalStateException("El juego ya ha finalizado.");
-        }
+        asegurarNoFinalizado();
         Jugador actual = controlador.getJugadorActual();
         if (actual.getManoSize() != 2){
             controlador = controlador.penalizarJugador(this, 2);
@@ -86,30 +81,20 @@ public class Juego {
         else {
             // levanta por jugar mal la carta
             controlador = controlador.penalizarJugador(this, 2).avanzar();
-
         }
-
         if (actual.manoVacia()) {
             estado = "finalizada";
         }
-
         return this;
     }
 
     public Juego jugarCartaCambiandoColor(String color) {
-        if (estado.equals("finalizada")) {
-            throw new IllegalStateException("El juego ya ha finalizado.");
-        }
-        Jugador actual = controlador.getJugadorActual();
-        CartaWild carta = new CartaWild(color);
-        if(actual.jugarCarta(carta, getCartaPozo())){
-            pozo = carta;
-            controlador = carta.actualizarControlador(this, controlador);
-        }
-        else {
-            // levanta por jugar mal la carta
-            controlador = controlador.penalizarJugador(this, 2);
-        }
+        jugarCarta(new CartaWild(color));
+        return this;
+    }
+
+    public Juego jugarCartaCambiandoColorCantandoUno(String color) {
+        jugarCartaCantandoUno(new CartaWild(color));
         return this;
     }
 
@@ -142,15 +127,12 @@ public class Juego {
         return controlador.getJugadorActual();
     }
 
-
     public List<Carta> getCartasJugador(String nombreJug) {
-        for (Jugador j : jugadores) {
-            if (j.nombre.equals(nombreJug)) {
-                // Devolvemos una copia defensiva de la mano
-                return new ArrayList<>(j.getMano());
-            }
-        }
-        // Si no encontramos al jugador, devolvemos lista vacía
-        return Collections.emptyList();
+        return jugadores.stream()
+                .filter(j -> j.nombre.equals(nombreJug))
+                .findFirst()
+                .map(Jugador::getMano)
+                .map(Collections::unmodifiableList)
+                .orElse(Collections.emptyList());
     }
 }

@@ -22,15 +22,16 @@ public class CartaWild extends Carta {
         return c.avanzar();
     }
 
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof CartaWild)) return false;
-        CartaWild that = (CartaWild) o;
-        return Objects.equals(color, that.color);
+        if (((CartaWild) o).color.equals("wild")) return true;
+        else{
+            CartaWild that = (CartaWild) o;
+            return Objects.equals(color, that.color);
+        }
     }
 
-    @Override
     public int hashCode() {
         return Objects.hash(color);
     }

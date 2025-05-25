@@ -258,4 +258,37 @@ public class TestJuego {
         CartaWild w2 = new CartaWild("rojo");
         assertTrue(w1.esCompatible(w2));
     }
+
+    // Tests para jugarCartaCambiandoColor
+    @Test
+    public void testCambiandoColor() {
+        // Juego con un Wild en la mano
+        List<Carta> m4 = new LinkedList<>();
+        Carta initial = new CartaNumero("rojo", 0);
+        m4.add(initial);
+        m4.add(new CartaWild("wild"));
+        List<String> one = Collections.singletonList("P");
+        Juego j4 = new Juego(m4, 1, one);
+        j4.jugarCartaCambiandoColor("verde");
+        Carta top = j4.getCartaPozo();
+        assertTrue(top instanceof CartaWild);
+        assertEquals("verde", ((CartaWild) top).color);
+    }
+
+    @Test
+    public void testCambiandoColorCantandoUno() {
+        // Juego con dos Wilds en la mano para cantar Uno
+        List<Carta> m5 = new LinkedList<>();
+        Carta init = new CartaNumero("azul", 0);
+        m5.add(init);
+        m5.add(new CartaWild("wild"));
+        m5.add(new CartaWild("wild"));
+        List<String> players = Collections.singletonList("P");
+        Juego j5 = new Juego(m5, 2, players);
+        j5.jugarCartaCambiandoColorCantandoUno("rojo");
+        Carta top = j5.getCartaPozo();
+        assertTrue(top instanceof CartaWild);
+        assertEquals("rojo", ((CartaWild) top).color);
+        assertEquals(1, j5.getCantidadCartas("P"));
+    }
 }
