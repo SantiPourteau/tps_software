@@ -11,6 +11,11 @@ import java.util.stream.Collectors;
 public class UnoService {
 
     private final Map<UUID, Match> activeMatches = new ConcurrentHashMap<>();
+    private final Dealer dealer;
+
+    public UnoService(Dealer dealer) {
+        this.dealer = dealer;
+    }
 
     public UUID createNewMatch(List<String> players) {
         if (players == null || players.size() < 2) {
@@ -18,7 +23,7 @@ public class UnoService {
         }
 
         UUID matchId = UUID.randomUUID();
-        List<Card> deck = createStandardDeck();
+        List<Card> deck = dealer.fullDeck();
         
         Match match = Match.fullMatch(deck, players);
         activeMatches.put(matchId, match);
@@ -59,38 +64,7 @@ public class UnoService {
         return match;
     }
 
-    private List<Card> createStandardDeck() {
-        List<Card> deck = new ArrayList<>();
-        String[] colors = {"Red", "Blue", "Green", "Yellow"};
-        
-        // Cartas numericas (0-9) - 2 de cada numero por color (excepto 0)
-        for (String color : colors) {
-            deck.add(new NumberCard(color, 0)); // Solo una carta 0 por color
-            for (int number = 1; number <= 9; number++) {
-                deck.add(new NumberCard(color, number));
-                deck.add(new NumberCard(color, number));
-            }
-        }
-        
-        // Cartas especiales - 2 de cada tipo por color
-        for (String color : colors) {
-            deck.add(new SkipCard(color));
-            deck.add(new SkipCard(color));
-            deck.add(new ReverseCard(color));
-            deck.add(new ReverseCard(color));
-            deck.add(new Draw2Card(color));
-            deck.add(new Draw2Card(color));
-        }
-        
-        // Cartas comodin - 4 de cada tipo
-        for (int i = 0; i < 4; i++) {
-            deck.add(new WildCard());
-        }
-        
-        // Mezclar el mazo
-        Collections.shuffle(deck);
-        return deck;
-    }
+
 
     private Card convertJsonCardToCard(JsonCard jsonCard) {
         switch (jsonCard.getType()) {

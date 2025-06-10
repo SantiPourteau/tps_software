@@ -2,20 +2,56 @@ package com.example.tp4;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.udesa.unoback.model.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.lenient;
 
+@ExtendWith(MockitoExtension.class)
 public class UnoServiceTest {
+
+    @Mock
+    private Dealer dealer;
 
     private UnoService unoService;
 
     @BeforeEach
     public void setUp() {
-        unoService = new UnoService();
+        unoService = new UnoService(dealer);
+        
+        // Configurar mock del dealer para devolver un mazo predecible
+        // Solo cuando se llame realmente (lenient para evitar errores de stubbing innecesario)
+        lenient().when(dealer.fullDeck()).thenReturn(createTestDeck());
+    }
+
+    private List<Card> createTestDeck() {
+        // Crear un mazo grande para soportar 3 jugadores (21 cartas + 1 activa = 22 mínimo)
+        List<Card> deck = new ArrayList<>();
+        
+        // Carta activa inicial
+        deck.add(new NumberCard("Red", 1));
+        
+        // Cartas para jugadores (7 cartas cada uno)
+        for (int player = 0; player < 3; player++) {
+            for (int card = 0; card < 7; card++) {
+                deck.add(new NumberCard("Blue", card + 1));
+            }
+        }
+        
+        // Cartas adicionales para el mazo de robo
+        for (int i = 0; i < 20; i++) {
+            deck.add(new NumberCard("Green", (i % 9) + 1));
+        }
+        
+        return deck;
     }
 
     @Test
@@ -26,11 +62,15 @@ public class UnoServiceTest {
         
         assertNotNull(matchId);
         
+        // Verificar que se usó el dealer
+        verify(dealer, times(1)).fullDeck();
+        
         // Verificar que la partida se creó correctamente obteniendo la carta activa
         JsonCard activeCard = unoService.getActiveCard(matchId);
         assertNotNull(activeCard);
-        assertNotNull(activeCard.getColor());
-        assertNotNull(activeCard.getType());
+        assertEquals("Red", activeCard.getColor()); // Conocemos la carta porque controlamos el mazo
+        assertEquals("NumberCard", activeCard.getType());
+        assertEquals(1, activeCard.getNumber());
     }
 
     @Test
@@ -73,6 +113,12 @@ public class UnoServiceTest {
         
         assertNotNull(hand);
         assertEquals(7, hand.size()); // Juego completo inicia con 7 cartas
+        
+        // Como controlamos el mazo, sabemos qué cartas debe tener Alice
+        assertEquals("Blue", hand.get(0).getColor());
+        assertEquals(1, hand.get(0).getNumber());
+        assertEquals("Blue", hand.get(1).getColor());
+        assertEquals(2, hand.get(1).getNumber());
         
         // Verificar que todas las cartas tienen propiedades válidas
         for (JsonCard card : hand) {
