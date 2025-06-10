@@ -1,5 +1,8 @@
 package com.example.tp4;
 
+import com.example.tp4.exceptions.InvalidGameActionException;
+import com.example.tp4.exceptions.InvalidGameParametersException;
+import com.example.tp4.exceptions.MatchNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -87,19 +90,19 @@ public class UnoServiceTest {
     @Test
     public void testCreateNewMatchWithInvalidPlayerCount() {
         // Test con null
-        assertThrows(RuntimeException.class, () -> {
+        assertThrows(InvalidGameParametersException.class, () -> {
             unoService.createNewMatch(null);
         });
 
         // Test con un solo jugador
         List<String> onePlayer = List.of("Alice");
-        assertThrows(RuntimeException.class, () -> {
+        assertThrows(InvalidGameParametersException.class, () -> {
             unoService.createNewMatch(onePlayer);
         });
 
         // Test con lista vacía
         List<String> noPlayers = List.of();
-        assertThrows(RuntimeException.class, () -> {
+        assertThrows(InvalidGameParametersException.class, () -> {
             unoService.createNewMatch(noPlayers);
         });
     }
@@ -150,7 +153,7 @@ public class UnoServiceTest {
         UUID matchId = unoService.createNewMatch(players);
         
         // Intentar robar carta con el jugador incorrecto (Bob no es el primer jugador)
-        assertThrows(RuntimeException.class, () -> {
+        assertThrows(InvalidGameActionException.class, () -> {
             unoService.drawCard(matchId, "Bob");
         });
     }
@@ -160,7 +163,7 @@ public class UnoServiceTest {
         UUID fakeMatchId = UUID.randomUUID();
         JsonCard card = new JsonCard("Red", 1, "NumberCard", false);
         
-        assertThrows(RuntimeException.class, () -> {
+        assertThrows(MatchNotFoundException.class, () -> {
             unoService.playCard(fakeMatchId, "Alice", card);
         });
     }
@@ -169,7 +172,7 @@ public class UnoServiceTest {
     public void testGetActiveCardInvalidMatch() {
         UUID fakeMatchId = UUID.randomUUID();
         
-        assertThrows(RuntimeException.class, () -> {
+        assertThrows(MatchNotFoundException.class, () -> {
             unoService.getActiveCard(fakeMatchId);
         });
     }
@@ -178,7 +181,7 @@ public class UnoServiceTest {
     public void testGetPlayerHandInvalidMatch() {
         UUID fakeMatchId = UUID.randomUUID();
         
-        assertThrows(RuntimeException.class, () -> {
+        assertThrows(MatchNotFoundException.class, () -> {
             unoService.getPlayerHand(fakeMatchId);
         });
     }
@@ -187,7 +190,7 @@ public class UnoServiceTest {
     public void testDrawCardInvalidMatch() {
         UUID fakeMatchId = UUID.randomUUID();
         
-        assertThrows(RuntimeException.class, () -> {
+        assertThrows(MatchNotFoundException.class, () -> {
             unoService.drawCard(fakeMatchId, "Alice");
         });
     }
@@ -257,7 +260,7 @@ public class UnoServiceTest {
         // Crear una carta con tipo inválido
         JsonCard invalidCard = new JsonCard("Red", 1, "InvalidCard", false);
         
-        assertThrows(RuntimeException.class, () -> {
+        assertThrows(InvalidGameParametersException.class, () -> {
             unoService.playCard(matchId, "Alice", invalidCard);
         });
     }

@@ -105,15 +105,15 @@ public class UnoControllerIntegrationTest {
     public void testInvalidMatch() {
         String fakeMatchId = "00000000-0000-0000-0000-000000000000";
 
-        // Intentar obtener carta activa de partida inexistente
+        // Intentar obtener carta activa de partida inexistente - debería ser 404 (Not Found)
         String activeCardUrl = "http://localhost:" + port + "/activecard/" + fakeMatchId;
         ResponseEntity<String> activeCardResponse = restTemplate.getForEntity(activeCardUrl, String.class);
-        assertEquals(400, activeCardResponse.getStatusCode().value());
+        assertEquals(404, activeCardResponse.getStatusCode().value());
 
-        // Intentar robar carta de partida inexistente
+        // Intentar robar carta de partida inexistente - debería ser 404 (Not Found)
         String drawUrl = "http://localhost:" + port + "/draw/" + fakeMatchId + "/A";
         ResponseEntity<String> drawResponse = restTemplate.postForEntity(drawUrl, null, String.class);
-        assertEquals(400, drawResponse.getStatusCode().value());
+        assertEquals(404, drawResponse.getStatusCode().value());
     }
 
     @Test
@@ -191,7 +191,8 @@ public class UnoControllerIntegrationTest {
 
     @Test
     public void testEmptyPlayersParam() {
-        String url = "http://localhost:" + port + "/newmatch";
+        // Test con lista vacía explícita
+        String url = "http://localhost:" + port + "/newmatch?players=";
         ResponseEntity<String> response = restTemplate.postForEntity(url, null, String.class);
         assertEquals(400, response.getStatusCode().value());
     }

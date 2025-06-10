@@ -1,5 +1,8 @@
 package com.example.tp4;
 
+import com.example.tp4.exceptions.InvalidGameActionException;
+import com.example.tp4.exceptions.InvalidGameParametersException;
+import com.example.tp4.exceptions.MatchNotFoundException;
 import org.springframework.stereotype.Service;
 import org.udesa.unoback.model.*;
 
@@ -19,7 +22,7 @@ public class UnoService {
 
     public UUID createNewMatch(List<String> players) {
         if (players == null || players.size() < 2) {
-            throw new RuntimeException("Se requieren al menos 2 jugadores para crear una partida");
+            throw new InvalidGameParametersException("Se requieren al menos 2 jugadores para crear una partida");
         }
 
         UUID matchId = UUID.randomUUID();
@@ -34,12 +37,24 @@ public class UnoService {
     public void playCard(UUID matchId, String player, JsonCard jsonCard) {
         Match match = getMatch(matchId);
         Card card = convertJsonCardToCard(jsonCard);
-        match.play(player, card);
+        
+        try {
+            match.play(player, card);
+        } catch (RuntimeException e) {
+            // Convertir excepciones del modelo a excepciones específicas del negocio
+            throw new InvalidGameActionException(e.getMessage(), e);
+        }
     }
 
     public void drawCard(UUID matchId, String player) {
         Match match = getMatch(matchId);
-        match.drawCard(player);
+        
+        try {
+            match.drawCard(player);
+        } catch (RuntimeException e) {
+            // Convertir excepciones del modelo a excepciones específicas del negocio
+            throw new InvalidGameActionException(e.getMessage(), e);
+        }
     }
 
     public JsonCard getActiveCard(UUID matchId) {
@@ -59,7 +74,7 @@ public class UnoService {
     private Match getMatch(UUID matchId) {
         Match match = activeMatches.get(matchId);
         if (match == null) {
-            throw new RuntimeException("Partida no encontrada: " + matchId);
+            throw new MatchNotFoundException(matchId.toString());
         }
         return match;
     }
@@ -87,7 +102,7 @@ public class UnoService {
                 }
                 return jsonCard.isShout() ? wildCard.uno() : wildCard;
             default:
-                throw new RuntimeException("Tipo de carta desconocido: " + jsonCard.getType());
+                throw new InvalidGameParametersException("Tipo de carta desconocido: " + jsonCard.getType());
         }
     }
 
