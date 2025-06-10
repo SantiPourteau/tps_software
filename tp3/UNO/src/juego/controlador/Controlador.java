@@ -1,9 +1,11 @@
 package juego.controlador;
 
 import java.util.List;
+import java.util.stream.IntStream;
 
 import juego.Juego;
 import juego.anillo.Ring;
+import juego.carta.Carta;
 import juego.jugador.Jugador;
 
 /**
@@ -49,6 +51,12 @@ public abstract class Controlador {
         return anillo.current();
     }
 
-    public abstract Controlador penalizarJugador(Juego juego, int numCartas);
+    public Controlador penalizarJugador(Juego juego, int numCartas){
+        Jugador actual = getJugadorActual();
+        IntStream.range(0, numCartas)
+                .mapToObj(i -> juego.mazo.removeFirst())
+                .forEach(actual::recibirCarta);
+        return this;
+    }
 }
 

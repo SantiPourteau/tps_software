@@ -18,7 +18,7 @@ public class ControladorIzquierda extends Controlador {
     }
 
     public Controlador avanzar() {
-        anillo.previous();
+        anillo.next();
         return this;
     }
 
@@ -27,17 +27,8 @@ public class ControladorIzquierda extends Controlador {
     }
 
     public Controlador saltear() {
-        anillo.previous();
-        anillo.previous();
-        return this;
-    }
-
-    public Controlador penalizarJugador(Juego juego, int numCartas) {
-        Jugador actual = anillo.current();
-        for (int i = 0; i < numCartas; i++) {
-            Carta carta = juego.mazo.removeFirst();
-            actual.recibirCarta(carta);
-        }
+        anillo.next();
+        anillo.next();
         return this;
     }
 }

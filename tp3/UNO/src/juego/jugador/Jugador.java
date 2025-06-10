@@ -1,11 +1,13 @@
 package juego.jugador;
 
 import juego.carta.Carta;
+import juego.carta.CartaReverse;
+
 import java.util.List;
 
 public class Jugador {
 
-    private List<Carta> mano;
+    public List<Carta> mano;
     public String nombre;
 
     public Jugador(String nombre, List<Carta> cartas) {
@@ -37,4 +39,6 @@ public class Jugador {
     public boolean manoVacia() {
         return mano.isEmpty();
     }
+
+    public List<Carta> getMano() {return mano;}
 }

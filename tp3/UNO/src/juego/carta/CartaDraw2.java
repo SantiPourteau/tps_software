@@ -4,8 +4,9 @@ import juego.controlador.Controlador;
 import juego.jugador.Jugador;
 import juego.Juego;
 
+import java.util.Objects;
+
 public class CartaDraw2 extends Carta {
-    public String color;
 
     public CartaDraw2(String color) {
         this.color = color;
@@ -25,5 +26,16 @@ public class CartaDraw2 extends Carta {
 
     public int penalizar() {
         return 2;
+    }
+
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof CartaDraw2)) return false;
+        CartaDraw2 that = (CartaDraw2) o;
+        return Objects.equals(color, that.color);
+    }
+
+    public int hashCode() {
+        return Objects.hash(color);
     }
 }
