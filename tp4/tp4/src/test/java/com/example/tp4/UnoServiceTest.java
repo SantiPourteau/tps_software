@@ -5,9 +5,9 @@ import com.example.tp4.exceptions.InvalidGameParametersException;
 import com.example.tp4.exceptions.MatchNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.udesa.unoback.model.*;
 
 import java.util.ArrayList;
@@ -18,18 +18,17 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.lenient;
 
-@ExtendWith(MockitoExtension.class)
+@SpringBootTest
 public class UnoServiceTest {
 
-    @Mock
+    @MockBean
     private Dealer dealer;
 
+    @Autowired
     private UnoService unoService;
 
     @BeforeEach
     public void setUp() {
-        unoService = new UnoService(dealer);
-        
         // Configurar mock del dealer para devolver un mazo predecible
         // Solo cuando se llame realmente (lenient para evitar errores de stubbing innecesario)
         lenient().when(dealer.fullDeck()).thenReturn(createTestDeck());
