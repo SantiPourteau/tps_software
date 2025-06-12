@@ -57,7 +57,7 @@ public class UnoServiceTest {
     }
 
     @Test
-    public void testCreateNewMatchWithTwoPlayers() {
+    public void test01CreateNewMatchWithTwoPlayers() {
         List<String> players = List.of("Alice", "Bob");
         
         UUID matchId = unoService.createNewMatch(players);
@@ -76,7 +76,7 @@ public class UnoServiceTest {
     }
 
     @Test
-    public void testCreateNewMatchWithThreePlayers() {
+    public void test02CreateNewMatchWithThreePlayers() {
         List<String> players = List.of("Alice", "Bob", "Charlie");
         
         UUID matchId = unoService.createNewMatch(players);
@@ -87,7 +87,7 @@ public class UnoServiceTest {
     }
 
     @Test
-    public void testCreateNewMatchWithInvalidPlayerCount() {
+    public void test03CreateNewMatchWithInvalidPlayerCount() {
         // Test con null
         assertThrows(InvalidGameParametersException.class, () -> {
             unoService.createNewMatch(null);
@@ -107,7 +107,7 @@ public class UnoServiceTest {
     }
 
     @Test
-    public void testGetPlayerHand() {
+    public void test04GetPlayerHand() {
         List<String> players = List.of("Alice", "Bob");
         UUID matchId = unoService.createNewMatch(players);
         
@@ -130,7 +130,7 @@ public class UnoServiceTest {
     }
 
     @Test
-    public void testDrawCard() {
+    public void test05DrawCard() {
         List<String> players = List.of("Alice", "Bob");
         UUID matchId = unoService.createNewMatch(players);
         
@@ -147,7 +147,7 @@ public class UnoServiceTest {
     }
 
     @Test
-    public void testDrawCardWrongPlayer() {
+    public void test06DrawCardWrongPlayer() {
         List<String> players = List.of("Alice", "Bob");
         UUID matchId = unoService.createNewMatch(players);
         
@@ -158,7 +158,7 @@ public class UnoServiceTest {
     }
 
     @Test
-    public void testPlayCardInvalidMatch() {
+    public void test07PlayCardInvalidMatch() {
         UUID fakeMatchId = UUID.randomUUID();
         JsonCard card = new JsonCard("Red", 1, "NumberCard", false);
         
@@ -168,7 +168,7 @@ public class UnoServiceTest {
     }
 
     @Test
-    public void testGetActiveCardInvalidMatch() {
+    public void test08GetActiveCardInvalidMatch() {
         UUID fakeMatchId = UUID.randomUUID();
         
         assertThrows(MatchNotFoundException.class, () -> {
@@ -177,7 +177,7 @@ public class UnoServiceTest {
     }
 
     @Test
-    public void testGetPlayerHandInvalidMatch() {
+    public void test09GetPlayerHandInvalidMatch() {
         UUID fakeMatchId = UUID.randomUUID();
         
         assertThrows(MatchNotFoundException.class, () -> {
@@ -186,7 +186,7 @@ public class UnoServiceTest {
     }
 
     @Test
-    public void testDrawCardInvalidMatch() {
+    public void test10DrawCardInvalidMatch() {
         UUID fakeMatchId = UUID.randomUUID();
         
         assertThrows(MatchNotFoundException.class, () -> {
@@ -195,7 +195,7 @@ public class UnoServiceTest {
     }
 
     @Test
-    public void testConvertJsonCardToCard() {
+    public void test11ConvertJsonCardToCard() {
         List<String> players = List.of("Alice", "Bob");
         UUID matchId = unoService.createNewMatch(players);
         
@@ -217,7 +217,7 @@ public class UnoServiceTest {
     }
 
     @Test
-    public void testUnoShout() {
+    public void test12UnoShout() {
         List<String> players = List.of("Alice", "Bob");
         UUID matchId = unoService.createNewMatch(players);
         
@@ -235,7 +235,7 @@ public class UnoServiceTest {
     }
 
     @Test
-    public void testWildCardWithColor() {
+    public void test13WildCardWithColor() {
         List<String> players = List.of("Alice", "Bob");
         UUID matchId = unoService.createNewMatch(players);
         
@@ -252,7 +252,7 @@ public class UnoServiceTest {
     }
 
     @Test
-    public void testInvalidCardType() {
+    public void test14InvalidCardType() {
         List<String> players = List.of("Alice", "Bob");
         UUID matchId = unoService.createNewMatch(players);
         
@@ -265,7 +265,7 @@ public class UnoServiceTest {
     }
 
     @Test
-    public void testMultipleMatches() {
+    public void test15MultipleMatches() {
         List<String> players1 = List.of("Alice", "Bob");
         List<String> players2 = List.of("Charlie", "David");
         

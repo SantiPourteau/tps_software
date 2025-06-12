@@ -23,11 +23,8 @@ public class DealerTest {
     public void testFullDeckSize() {
         List<Card> deck = dealer.fullDeck();
         
-        // Un mazo completo de UNO estándar: 76 numéricas + 24 especiales + 4 comodín = 104 cartas
-        // Pero nuestro dealer solo crea comodín normales, no +4, así que son menos
-        assertTrue(deck.size() > 0);
-        // Verificamos al menos que tenga un tamaño razonable
-        assertTrue(deck.size() >= 80);
+        // Un mazo completo de UNO: 76 numéricas + 8 Skip + 8 Reverse + 8 Draw2 + 4 Wild = 104 cartas
+        assertEquals(104, deck.size());
     }
 
     @Test
