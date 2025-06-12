@@ -79,30 +79,13 @@ public class UnoService {
         return match;
     }
 
-
-
     private Card convertJsonCardToCard(JsonCard jsonCard) {
-        switch (jsonCard.getType()) {
-            case "NumberCard":
-                NumberCard numberCard = new NumberCard(jsonCard.getColor(), jsonCard.getNumber());
-                return jsonCard.isShout() ? numberCard.uno() : numberCard;
-            case "SkipCard":
-                SkipCard skipCard = new SkipCard(jsonCard.getColor());
-                return jsonCard.isShout() ? skipCard.uno() : skipCard;
-            case "ReverseCard":
-                ReverseCard reverseCard = new ReverseCard(jsonCard.getColor());
-                return jsonCard.isShout() ? reverseCard.uno() : reverseCard;
-            case "Draw2Card":
-                Draw2Card draw2Card = new Draw2Card(jsonCard.getColor());
-                return jsonCard.isShout() ? draw2Card.uno() : draw2Card;
-            case "WildCard":
-                WildCard wildCard = new WildCard();
-                if (jsonCard.getColor() != null) {
-                    wildCard = (WildCard) wildCard.asColor(jsonCard.getColor());
-                }
-                return jsonCard.isShout() ? wildCard.uno() : wildCard;
-            default:
-                throw new InvalidGameParametersException("Tipo de carta desconocido: " + jsonCard.getType());
+        try {
+            return jsonCard.asCard();
+        } catch (Exception e) {
+            // Cualquier problema al convertir la carta (tipo inexistente, firma incorrecta, etc.)
+            // se mapea a InvalidGameParametersException para mantener la semántica previa.
+            throw new InvalidGameParametersException("Tipo de carta desconocido: " + jsonCard.getType(), e);
         }
     }
 
